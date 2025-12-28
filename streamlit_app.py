@@ -39,8 +39,8 @@ st.markdown("""
 def analyze_jubo_deep(image_file, key):
     """Gemini를 이용해 주보 정보 추출 및 성경 내용 생성"""
     genai.configure(api_key=key)
-    # 최신 모델 사용 (속도와 정확성 균형)
-    model = genai.GenerativeModel('gemini-2.0-flash-exp') 
+    # 요청하신 모델로 변경
+    model = genai.GenerativeModel('gemini-3-flash-preview') 
     
     # Streamlit 업로드 파일을 임시 파일로 저장 (Gemini API 요구사항)
     with tempfile.NamedTemporaryFile(delete=False, suffix='.jpg') as tmp:
