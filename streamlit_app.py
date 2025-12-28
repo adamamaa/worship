@@ -204,14 +204,19 @@ else:
                 # PPT 생성 함수 호출
                 final_ppt = fill_ppt_text(template_pptx, final_data)
                 
-                # 다운로드 버튼 표시 (폼 밖으로 나가기 위해 세션 사용 권장하지만, 여기선 바로 표시)
-                st.divider()
-                st.balloons()
-                st.success("작업이 완료되었습니다! 아래 버튼을 눌러 다운로드하세요.")
-                
-                st.download_button(
-                    label="📥 완성된 PPT 다운로드",
-                    data=final_ppt,
-                    file_name=f"{new_title}_예배.pptx",
-                    mime="application/vnd.openxmlformats-officedocument.presentationml.presentation"
-                )
+                # 세션 상태에 저장 (폼 밖에서 다운로드 버튼을 보여주기 위함)
+                st.session_state['final_ppt'] = final_ppt
+                st.session_state['final_file_name'] = f"{new_title}_예배.pptx"
+
+        # 폼 밖에서 다운로드 버튼 표시
+        if 'final_ppt' in st.session_state:
+            st.divider()
+            st.balloons()
+            st.success("작업이 완료되었습니다! 아래 버튼을 눌러 다운로드하세요.")
+            
+            st.download_button(
+                label="📥 완성된 PPT 다운로드",
+                data=st.session_state['final_ppt'],
+                file_name=st.session_state['final_file_name'],
+                mime="application/vnd.openxmlformats-officedocument.presentationml.presentation"
+            )
